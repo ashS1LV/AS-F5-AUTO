@@ -1,0 +1,26 @@
+---
+- name: DEPLOY F5 AS3 DEC
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+
+  vars_files:
+    - ../creds/f5_creds.yaml
+
+  tasks:
+
+  - name: Create an AS3 Declaration
+    uri:
+      url: https://35.179.86.82/mgmt/shared/appsvcs/declare
+      user: "{{ f5_user }}"
+      password: "{{ f5_pass }}"
+      method: POST
+      body: "{{ lookup('file','AS3.json') }}"
+      force_basic_auth: yes
+      status_code: 200
+      body_format: json
+      validate_certs: no
+
+...
